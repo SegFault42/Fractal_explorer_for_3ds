@@ -36,14 +36,14 @@ INCLUDES	:=	include
 
 APP_TITLE := Fractal_Explorer
 APP_DESCRIPTION := No description
-APP_AUTHOR := SegmentationFault
+APP_AUTHOR := Segmentation_Fault
 
 #---------------------------------------------------------------------------------
 # options for code generation
 #---------------------------------------------------------------------------------
 ARCH	:=	-march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft
 
-CFLAGS	:=	-g -Wall -O2 -mword-relocations \
+CFLAGS	:=	-O3 -Wall -mword-relocations \
 			-fomit-frame-pointer -ffunction-sections \
 			$(ARCH)
 
@@ -130,7 +130,7 @@ ifneq ($(ROMFS),)
 	export _3DSXFLAGS += --romfs=$(CURDIR)/$(ROMFS)
 endif
 
-.PHONY: $(BUILD) clean all
+.PHONY: $(BUILD) clean all run
 
 #---------------------------------------------------------------------------------
 all: $(BUILD)
