@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <3ds.h>
+#include "../sf2dlib/libsf2d/include/sf2d.h"
 #include <math.h>
 
 #define W_UP 400
@@ -30,9 +31,13 @@ typedef struct	s_fractal
 }				t_fractal;
 
 void	put_pixel(u8 *fb, u16 x, u16 y, u8 red, u8 green, u8 blue);
+void	drawPixel(u8 *screen, int x, int y, u32 color);
 void	draw_rect(u8 *fb, int x1, int x2, int y1, int y2);
 void	draw_ellipse(u8 *fb, int x, int y);
 void	clear_image(u8 *fb);
 double	ft_sqrt(double a);
+
+void	init_mandelbrot(t_fractal *fractal);
+void	draw_mandelbrot1(t_fractal *fractal, u8 *fbi, int color);
 
 #endif
