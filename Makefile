@@ -36,7 +36,7 @@ INCLUDES	:=	include
 
 APP_TITLE := Fractal_Explorer
 APP_DESCRIPTION := No description
-APP_AUTHOR := Segmentation_Fault
+APP_AUTHOR := SegFault42
 
 #---------------------------------------------------------------------------------
 # options for code generation
@@ -54,13 +54,13 @@ CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++11
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=3dsx.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= -lctru -lm
+LIBS	:= -lsf2d -lcitro3d -lctru -lm
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
 # include and lib
 #---------------------------------------------------------------------------------
-LIBDIRS	:= $(CTRULIB)
+LIBDIRS	:= $(CTRULIB) $(CURDIR)/../libsf2d
 
 
 #---------------------------------------------------------------------------------
@@ -147,7 +147,7 @@ clean:
 #---------------------------------------------------------------------------------
 run:
 	@make
-	@../citra-20160321-446d7c7-osx-amd64/citra ./$(TARGET).3dsx
+	@../3ds_homebrew_dev/citra_emu/citra ./$(TARGET).3dsx
 
 #---------------------------------------------------------------------------------
 else

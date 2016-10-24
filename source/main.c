@@ -6,51 +6,67 @@ int main(void)
 {
 	PrintConsole	top_screen;
 	t_fractal		fractal;
+	u32				kHeld;
+	u32				kDown;
 	int				color = 50;
+	double			speed_move = 0.01;
 
-	gfxInitDefault();
-	gfxSet3D(false);
+	sf2d_init();
+	sf2d_set_3D(0);
+	//=================================n3DS clock==============================
+	/*if ((getModel() == 2) || (getModel() == 4))*/
+		/*osSetSpeedupEnable(true);*/
+	//=========================================================================
 	consoleInit(GFX_BOTTOM, &top_screen); // Initialisation de la console sur lecran inferieur
-	consoleSelect(&top_screen);
-	gfxSetDoubleBuffering(GFX_TOP, false);
-
 	init_mandelbrot(&fractal);
 	//========================================================================//
 	while (aptMainLoop())
 	{
 		hidScanInput(); // scan des touches de la console
-		u32 kDown = hidKeysHeld(); // hidKeysHeld fonction de key repeat
-		u8* fb = gfxGetFramebuffer(GFX_TOP, GFX_LEFT, NULL, NULL);
-		draw_mandelbrot1(&fractal, fb, color);
-		gfxFlushBuffers();
-		/*gfxSwapBuffersGpu();*/
-		gspWaitForEvent(GSPGPU_EVENT_VBlank0, false);
-		/*gspWaitForVBlank();*/
-		/*clear_image(fb);*/
-		if (kDown & KEY_START)
+		kHeld = hidKeysHeld(); // hidKeysHeld fonction de key repeat
+		kDown = hidKeysDown(); // hidKeysHeld fonction de key repeat
+
+		sf2d_start_frame(GFX_TOP, GFX_LEFT);
+			draw_mandelbrot1(&fractal, color);
+		sf2d_end_frame();
+
+		if (kHeld & KEY_START)
 			break;
-		if (kDown & KEY_R)
+		if (kHeld & KEY_R)
 			fractal.i_max++;
-		if (kDown & KEY_L)
+		if (kHeld & KEY_L)
 			fractal.i_max--;
-		if (kDown & KEY_LEFT)
-			fractal.x1 += 0.2;
-		if (kDown & KEY_RIGHT)
-			fractal.x1 -= 0.2;
-		if (kDown & KEY_UP)
-			fractal.y1 += 0.2;
-		if (kDown & KEY_DOWN)
-			fractal.y1 -= 0.2;
-		if (kDown & KEY_A)
-			fractal.zoom *= 0.3;
-		if (kDown & KEY_B)
-			fractal.zoom /= 0.3;
-		/*color = 1+(int) (255.0*rand()/(RAND_MAX+1.0));*/
-		color +=10;
-		if (color >= 190)
-			color = 50;
+		if (kDown & KEY_Y)
+			speed_move += 0.01;
+		if (kDown & KEY_X)
+			speed_move -= 0.01;
+		//================================Key_Held=============================
+		if (kHeld & KEY_CPAD_LEFT)
+			fractal.x1 += speed_move;
+		if (kHeld & KEY_CPAD_RIGHT)
+			fractal.x1 -= speed_move;
+		if (kHeld & KEY_CPAD_UP)
+			fractal.y1 += speed_move;
+		if (kHeld & KEY_CPAD_DOWN)
+			fractal.y1 -= speed_move;
+		//=====================================================================
+		if (kHeld & KEY_B)
+			fractal.zoom /= 1.1;
+		if (kHeld & KEY_A)
+			fractal.zoom *= 1.1;
+		//================================Key_Down=============================
+		if (kDown & KEY_DLEFT)
+			fractal.x1 += speed_move;
+		if (kDown & KEY_DRIGHT)
+			fractal.x1 -= speed_move;
+		if (kDown & KEY_DUP)
+			fractal.y1 += speed_move;
+		if (kDown & KEY_DDOWN)
+			fractal.y1 -= speed_move;
+		//=====================================================================
+		sf2d_swapbuffers();
+		printf("fps = %2.f\r", sf2d_get_fps());
 	}
-	//========================================================================//
-	gfxExit();
+	sf2d_fini();
 	return 0;
 }

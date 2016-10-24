@@ -3,14 +3,14 @@
 
 #include <string.h>
 #include <stdio.h>
-#include <3ds.h>
-#include "../sf2dlib/libsf2d/include/sf2d.h"
+//#include <3ds.h>
+#include <sf2d.h>
 #include <math.h>
 
 #define W_UP 400
 #define H_UP 240
-#define W_BOT 320
-#define H_BOT 240
+#define W_DOWN 320
+#define H_DOWN 240
 
 typedef struct	s_fractal
 {
@@ -38,6 +38,6 @@ void	clear_image(u8 *fb);
 double	ft_sqrt(double a);
 
 void	init_mandelbrot(t_fractal *fractal);
-void	draw_mandelbrot1(t_fractal *fractal, u8 *fbi, int color);
+void	draw_mandelbrot1(t_fractal *fractal, int color);
 
 #endif
