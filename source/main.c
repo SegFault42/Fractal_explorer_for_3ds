@@ -11,7 +11,7 @@ int main(void)
 	int				color = 50;
 	double			speed_move = 0.01;
 
-	sf2d_init();
+	sf2d_init_advanced(SF2D_GPUCMD_DEFAULT_SIZE * 6, SF2D_TEMPPOOL_DEFAULT_SIZE * 6);
 	sf2d_set_3D(0);
 	//=================================n3DS clock==============================
 	/*if ((getModel() == 2) || (getModel() == 4))*/
